@@ -1,0 +1,94 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "service.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/example/echo": {
+      "post": {
+        "operationId": "Echo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serviceFooMessage"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serviceFooMessage"
+            }
+          }
+        ],
+        "tags": [
+          "OpenHcosService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "serviceFooMessage": {
+      "type": "object",
+      "properties": {
+        "org_id": {
+          "type": "integer",
+          "format": "int32",
+          "title": "{\"name\" : \"服務機構代碼\" , \"maxLength\": 10 }"
+        },
+        "org_name": {
+          "type": "string",
+          "title": "{\"name\" : \"服務機構名稱\" , \"maxLength\": 20 }"
+        },
+        "note": {
+          "type": "string",
+          "title": "Note Blah 中文"
+        },
+        "owner": {
+          "$ref": "#/definitions/serviceUser",
+          "title": "使用者"
+        }
+      }
+    },
+    "serviceRole": {
+      "type": "string",
+      "enum": [
+        "GUEST",
+        "MEMBER",
+        "ADMIN"
+      ],
+      "default": "GUEST"
+    },
+    "serviceUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "role": {
+          "$ref": "#/definitions/serviceRole"
+        },
+        "create_date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+syntax = "proto3";
+package service;
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+message FooMessage {
+  // {"name" : "服務機構代碼" , "maxLength": 10 }
+  int32 org_id = 1;
+  // {"name" : "服務機構名稱" , "maxLength": 20 }
+  string org_name = 2;
+  // Note Blah 中文
+  string note = 3;
+  // 使用者
+  User owner = 4;
+}
+
+enum Role {
+    GUEST = 0;
+    MEMBER = 1;
+    ADMIN = 2;
+}
+
+message User {
+    uint32 id = 1;
+    Role role = 2;
+    google.protobuf.Timestamp create_date = 3;
+}
+
+message UserRole {
+    Role role = 1;
+}
+
+service OpenHcosService {
+  rpc Echo(FooMessage) returns (FooMessage) { 
+         option (google.api.http) = {
+             post: "/v1/example/echo"
+             body: "*"
+      };
+  }
+}
